@@ -1,3 +1,7 @@
+<?php 
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -55,9 +59,20 @@
 				</div>
 
 				<!--  Main navigation  -->
-				<ul class="main-nav nav navbar-nav navbar-right">
+				<?php if(!isset($_SESSION['logged_in']) && $_SESSION['logged_in']==true){
+				echo'<ul class="main-nav nav navbar-nav navbar-right">
 					<li><a href="http://localhost/create/login.html">Connexion</a></li>
-				</ul>
+					</ul>';
+				} else{
+				echo'<ul class="main-nav nav navbar-nav navbar-right">
+					<li><a href="http://localhost/create/logout.php">Deconnexion</a></li>
+					</ul>';
+				}
+				
+				
+				?>
+				
+				
 				<!-- /Main navigation -->
 
 			</div>

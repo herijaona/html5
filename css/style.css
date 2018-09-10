@@ -207,7 +207,7 @@ input[type="text"], input[type="email"], input[type="password"], input[type="num
     border-bottom: 2px solid #EEE;
     color: #354052;
     padding: 0px 10px;
-    opacity: 0.5;
+    opacity: 1;
     -webkit-transition: 0.2s border-color, 0.2s opacity;
     transition: 0.2s border-color, 0.2s opacity;
 }
@@ -1792,4 +1792,29 @@ header {
 .modal-company{
     max-width: 725px;
     }
+}
+
+.container-nav{
+    width: 80%;
+    margin: 0 auto;
+}
+.register nav.nav-transparent {
+    background: #283e4a !important;
+    height: 45px;
+}
+.register input, textarea{
+    border-radius: 5px !important;
+}
+.register label{
+    color: white;
+    font-size: 13px;
+}
+.register h4{
+    color: #fff;
+}
+.register .login100-form-title{
+    font-size: 17px;
+}
+.register .login100-form-btn{
+    border-radius: 5px; 
 }
