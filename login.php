@@ -1,30 +1,16 @@
 <?php
- session_start();  
-
 // core configuration
 include_once "config/core.php";
-include_once "config/database.php";
-include_once "inc/user.php";
 include_once "session/session.php";
+
 // default to false
 $access_denied=false;
- 
-
-
-// get database connection
-$database = new Database();
-$db = $database->getConnection();
- 
-// initialize objects
-$user = new User($db);
  
 // check if email and password are in the database
 $user->email=$_POST['email'];
  
 // check if email exists, also get user details using this emailExists() method
 $email_exists = $user->emailExists();
-
-
 
 
 // validate login
@@ -96,7 +82,7 @@ else{
 					</div>
 
 					<span class="login100-form-title p-t-20 p-b-45">
-						John Doe
+						Log in
 					</span>
 
 					<div class="wrap-input100 validate-input m-b-10" data-validate = "Username is required">

@@ -138,8 +138,10 @@ public function addTable($iduser){
         return null ;
     }else{
         try {
+            $image = $_FILES['logo']['name'];
+
             $tuto = $_POST['tuto'];
-            $sql = "INSERT INTO prime(users_id,photo) VALUES ('".$iduser."','".$tuto."')";
+            $sql = "INSERT INTO prime(users_id,photo,logo) VALUES ('".$iduser."','".$tuto."','".$image."')";
             $this->conn->exec($sql);    
             echo "Connected successfully"; 
             }

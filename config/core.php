@@ -19,4 +19,16 @@ $records_per_page = 5;
  
 // calculate for the query LIMIT clause
 $from_record_num = ($records_per_page * $page) - $records_per_page;
+
+
+//Database core
+include_once "config/database.php";
+include_once "inc/user.php";
+
+// get database connection
+$database = new Database();
+$db = $database->getConnection();
+ 
+// initialize objects
+$user = new User($db);
 ?>

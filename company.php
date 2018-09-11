@@ -1,5 +1,22 @@
 <?php 
-session_start();
+// core configuration
+include_once "config/core.php";
+
+// if log = true
+if(!$_SESSION["logged_in"]==true){
+	header("location:login.php");  
+}
+
+//get id for user
+// add to row
+$app = $user->UserDetails($_SESSION['users_id']); 
+$iduser = $app->id;
+
+if (isset($_POST['content'])) {
+   $user->addTable($iduser,$db);
+} 
+
+
 ?>
 
 <!DOCTYPE html>
@@ -209,20 +226,26 @@ session_start();
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <div class="modal-body">
-                    <div class="mb-3" data-validate = "Username is required">
-                        <label for="name">Nom de votre entreprise</label>
-                        <input class="input100" type="text" name="username" placeholder="Username">
-                    </div>
-                    <div class="mb-3" data-validate = "Password is required">
-                        <label for="adresse">Adresse</label>
-                        <input class="input100" type="password" name="pass" placeholder="Password">
-                    </div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
+			<form action='<?php htmlspecialchars($_SERVER["PHP_SELF"]) ?>' method="post" enctype="multipart/form-data">
+				<div class="modal-body">
+						<div class="mb-3" data-validate = "Username is required">
+							<label for="name">Nom de votre entreprise</label>
+							<input class="input100" type="text" name="tuto" placeholder="Name">
+						</div>
+						<div class="mb-3" data-validate = "Password is required">
+							<label for="adresse">Adresse</label>
+							<input class="input100" type="text" name="pass" placeholder="Adresse">
+						</div>
+						<div class="mb-3" data-validate = "Logo is required">
+							<label for="adresse">Logo</label>
+							<input class="input100" type="file" name="logo" placeholder="Logo">
+						</div>
+				</div>
+				<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				<button type="submit" class="btn btn-primary" name="content">Save changes</button>
+				</div>
+			</form>
           </div>
         </div>
     </div>
