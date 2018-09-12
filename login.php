@@ -114,7 +114,7 @@ else{
 					</div>
 
 					<div class="text-center w-full">
-						<a class="txt1" href="#">
+						<a class="txt1" href="http://localhost/create/register.php">
 							Create new account
 							<i class="fa fa-long-arrow-right"></i>						
 						</a>

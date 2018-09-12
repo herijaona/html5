@@ -1,6 +1,7 @@
 <?php 
 // core configuration
 include_once "config/core.php";
+include_once "mailer.php";
 
 // if log = true
 if(!$_SESSION["logged_in"]==true){
@@ -16,7 +17,16 @@ if (isset($_POST['content'])) {
    $user->addTable($iduser,$db);
 } 
 
+// get company details
+$top = $user->getOnecompany($_SESSION['users_id']);
 
+// delete company
+if( isset($_POST['delete'])){
+    if( isset( $_POST['id'] ) && is_numeric( $_POST['id'] ) && $_POST['id'] > 0 && isset( $_POST['photo'] )  )
+    {
+        $user->deleteRow();
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -123,30 +133,46 @@ if (isset($_POST['content'])) {
 				<!-- /blog -->
 
 				<!-- blog -->
-				<div class="col-md-4">
-					<div class="blog">
-						<div class="blog-img">
-							<img class="img-responsive" src="./img/blog2.jpg" alt="" width="100%">
-						</div>
-						<div class="blog-content">
-							<ul class="blog-meta">
-								<li><i class="fa fa-user"></i>John doe</li>
-								<li><i class="fa fa-clock-o"></i>18 Oct</li>
-								<li><i class="fa fa-comments"></i>57</li>
-							</ul>
-							<h3>Molestie at elementum eu facilisis sed odio</h3>
-							<p>Nec feugiat nisl pretium fusce id velit ut tortor pretium. Nisl purus in mollis nunc sed. Nunc non blandit massa enim nec.</p>
-							<a href="blog-single.html">Read more</a>
-						</div>
-					</div>
-				</div>
-				<!-- /blog -->
+				<?php while ($donnees =  $top->fetch())  {  ?>
 
-				<!-- blog -->
+				<!-- Modal -->
+				<div class="modal fade" id="TopModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<div class="modal-dialog modal-send" role="document">
+					<div class="modal-content pl-4 pr-4">
+						<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Attribution du tache</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						</div>
+						<div class=" row">
+							<form action="company.php" method="post" class="send-mi">
+								<input type="hidden" name="idphoto"  class="sendto" value="<?php echo $donnees['id'] ?>" />
+								<label for="name" class="mt-2 mb-0">Fonction :</label>
+								<select name="level" id="">
+									<option value="chefdeservice">chef de service</option>
+									<option value="technicien">technicien</option>
+								</select>
+								<label for="name" class="mt-2 mb-0">Email :</label>
+								<input class="input100" type="text" name="rec"/>
+								<input type="submit" class="btn btn-primary" value="Send" name="send" />
+							</form>
+						</div>
+					</div>
+					</div>
+				</div>
+
 				<div class="col-md-4">
 					<div class="blog">
 						<div class="blog-img">
-							<img class="img-responsive"  src="./img/blog3.jpg" alt="" width="100%">
+							<form action="company.php" method="post" class="form-delete">
+								<input type="hidden" name="delete" value="yes" />
+								<input type="hidden" name="photo" value="<?php echo $donnees['photo'] ?>" />
+								<input type="hidden" name="id" value="<?php echo $donnees['id'] ?>" />
+								<button type="submit" name="update"><i class="fa fa-pencil"></i></button>
+								<button type="submit" name="delete"><i class="fa fa-trash"></i></button>
+							</form>
+							<img class="img-responsive" src='./upload/<?php echo $donnees['logo']; ?>' alt="" width="100%">
 						</div>
 						<div class="blog-content">
 							<ul class="blog-meta">
@@ -154,12 +180,14 @@ if (isset($_POST['content'])) {
 								<li><i class="fa fa-clock-o"></i>18 Oct</li>
 								<li><i class="fa fa-comments"></i>57</li>
 							</ul>
-							<h3>Molestie at elementum eu facilisis sed odio</h3>
+							<h3><?php  echo $donnees['photo'];  ?></h3>
 							<p>Nec feugiat nisl pretium fusce id velit ut tortor pretium. Nisl purus in mollis nunc sed. Nunc non blandit massa enim nec.</p>
 							<a href="blog-single.html">Read more</a>
+							<a class="pull-right" href="blog-single.html" data-toggle="modal" data-target="#TopModal">Lier</a>
 						</div>
 					</div>
 				</div>
+				<?php } ?>
 				<!-- /blog -->
 
 			</div>
@@ -250,6 +278,9 @@ if (isset($_POST['content'])) {
         </div>
     </div>
 
+
+
+
 	<!-- jQuery Plugins -->
 	<script type="text/javascript" src="js/jquery.min.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
@@ -262,3 +293,7 @@ if (isset($_POST['content'])) {
 </body>
 
 </html>
+
+
+
+ 

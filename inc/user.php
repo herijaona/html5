@@ -138,10 +138,21 @@ public function addTable($iduser){
         return null ;
     }else{
         try {
-            $image = $_FILES['logo']['name'];
+            $image_name = $_FILES['logo'] ['name'];
+            $image_type = $_FILES['logo'] ['type'];
+            $image_size = $_FILES['logo'] ['size'];
+            $image_tmp_name = $_FILES['logo'] ['tmp_name'];
+        
+            if($image_name==''){
+                echo "<script>alert('Please Select a file')</script>";
+                exit();
+            }
+            else {
+            move_uploaded_file($image_tmp_name, "./upload/$image_name");
+            }
 
             $tuto = $_POST['tuto'];
-            $sql = "INSERT INTO prime(users_id,photo,logo) VALUES ('".$iduser."','".$tuto."','".$image."')";
+            $sql = "INSERT INTO prime(users_id,photo,logo) VALUES ('".$iduser."','".$tuto."','".$image_name."')";
             $this->conn->exec($sql);    
             echo "Connected successfully"; 
             }
@@ -237,7 +248,7 @@ public function create(){
 
 public function getOnecompany($users_id){
     global $db;
-    $q =  $db->prepare("SELECT e.lastname, u.photo,u.id,u.users_id 
+    $q =  $db->prepare("SELECT e.lastname, u.photo,u.id,u.users_id,u.logo
                         FROM users AS e 
                         INNER JOIN prime AS u ON e.id = u.users_id 
                         WHERE users_id=:users_id");
