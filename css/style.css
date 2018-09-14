@@ -1859,3 +1859,12 @@ header {
     max-width: 492px;
     }
 }
+.mb-20{
+    margin-bottom: 20px;
+}
+.data-entry{
+    min-height: 762px;
+}
+.vld-data{
+    width: 150px;
+}

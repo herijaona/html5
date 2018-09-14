@@ -8,6 +8,11 @@ if(!$_SESSION["logged_in"]==true){
 	header("location:login.php");  
 }
 
+// check if user is chefservice
+if($_SESSION['access_level']=="chefdeservice"){
+	header("location:data-entry.php");  
+}
+
 //get id for user
 // add to row
 $app = $user->UserDetails($_SESSION['users_id']); 
