@@ -207,7 +207,7 @@ input[type="text"], input[type="email"], input[type="password"], input[type="num
     border-bottom: 2px solid #EEE;
     color: #354052;
     padding: 0px 10px;
-    opacity: 0.5;
+    opacity: 1;
     -webkit-transition: 0.2s border-color, 0.2s opacity;
     transition: 0.2s border-color, 0.2s opacity;
 }
@@ -1791,5 +1791,71 @@ header {
 @media (min-width: 750px){
 .modal-company{
     max-width: 725px;
+    }
+}
+
+.container-nav{
+    width: 80%;
+    margin: 0 auto;
+}
+.register nav.nav-transparent {
+    background: #283e4a !important;
+    height: 45px;
+}
+.register input, textarea{
+    border-radius: 5px !important;
+}
+.register label{
+    color: white;
+    font-size: 13px;
+}
+.register h4{
+    color: #fff;
+}
+.register .login100-form-title{
+    font-size: 17px;
+}
+.register .login100-form-btn{
+    border-radius: 5px; 
+}
+
+.blog-img{
+    position: relative;
+}
+.blog-img .form-delete{
+    right: 5px;
+    top: 5px;
+    position: absolute;
+    right: 2px;
+    top: 2px;
+}
+.blog-img .form-delete button{
+    border-radius: 50%;
+    border: none;
+    font-size: 14px;
+    padding-bottom: 0px;
+    color: #cc4728;
+    height: 23px; 
+}
+.send-mi select{
+    background: #f4f4f4;
+    border: 1px solid #f4f4f4;
+    height: 41px;
+    width: 100%;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.send-mi .btn{
+    width: 100%;
+    margin-top: 17px;
+    margin-bottom: 45px;
+}
+.send-mi{
+    max-width: 375px;
+    margin: 0 auto;
+}
+@media (min-width: 750px){
+.modal-send{
+    max-width: 492px;
     }
 }

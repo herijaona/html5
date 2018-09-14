@@ -1,3 +1,60 @@
+<?php
+
+// core configuration
+include_once "config/core.php";
+include_once "session/session.php";
+
+// if log = true
+if(isset($_SESSION["logged_in"])){
+if($_SESSION["logged_in"]==true){
+	header("location:company.php");  
+}
+}
+
+// default to false
+$access_denied=false;
+ 
+if(isset($_POST['email']) AND isset($_POST['password'])){
+// check if email and password are in the database
+$user->email=$_POST['email'];
+
+// check if email exists, also get user details using this emailExists() method
+$email_exists = $user->emailExists();
+
+
+// validate login
+if (isset($email_exists) && password_verify($_POST['password'], $user->password) && $user->status==1){
+
+    // if it is, set the session value to true
+    $_SESSION['logged_in'] = true;
+    $_SESSION['users_id'] = $user->id;
+    $_SESSION['access_level'] = $user->access_level;
+    $_SESSION['firstname'] = htmlspecialchars($user->firstname, ENT_QUOTES, 'UTF-8') ;
+    $_SESSION['lastname'] = $user->lastname;
+ 
+        // if access level is 'Admin', redirect to admin section
+		if($user->access_level=='Admin'){
+			header("Location: {$home_url}company.php");
+		}
+	 
+		// else, redirect only to 'Customer' section
+		else{
+			header("Location: {$home_url}company.php");
+		}
+
+}
+ 
+// if username does not exist or password is wrong
+else{
+    $access_denied=true;
+}
+
+}
+?>
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,17 +85,33 @@
 	<div class="limiter">
 		<div class="container-login100" style="background-image: url('img/img-01.jpg');">
 			<div class="wrap-login100 p-t-190 p-b-30">
-				<form class="login100-form validate-form">
+
+				<?php 
+				
+				if(isset($_GET['id'])){
+					?>
+						<div class="login100-form-avatar">
+							<img src="img/avatar-01.jpg" alt="AVATAR">
+						</div>
+						<span class="login100-form-title p-t-20 p-b-45">
+							S'enregistrer
+						</span>
+					<?php
+				include_once "login-after-link.php";}
+				else{
+				?>
+
+				<form class="login100-form validate-form" method="post" action='<?php htmlspecialchars($_SERVER["PHP_SELF"]) ?>'>
 					<div class="login100-form-avatar">
 						<img src="img/avatar-01.jpg" alt="AVATAR">
 					</div>
 
 					<span class="login100-form-title p-t-20 p-b-45">
-						John Doe
+						Log in
 					</span>
 
 					<div class="wrap-input100 validate-input m-b-10" data-validate = "Username is required">
-						<input class="input100" type="text" name="username" placeholder="Username">
+						<input class="input100" type="text" name="email" placeholder="email">
 						<span class="focus-input100"></span>
 						<span class="symbol-input100">
 							<i class="fa fa-user"></i>
@@ -46,7 +119,7 @@
 					</div>
 
 					<div class="wrap-input100 validate-input m-b-10" data-validate = "Password is required">
-						<input class="input100" type="password" name="pass" placeholder="Password">
+						<input class="input100" type="password" name="password" placeholder="Password">
 						<span class="focus-input100"></span>
 						<span class="symbol-input100">
 							<i class="fa fa-lock"></i>
@@ -66,12 +139,18 @@
 					</div>
 
 					<div class="text-center w-full">
-						<a class="txt1" href="#">
+						<a class="txt1" href="http://localhost/create/register.php">
 							Create new account
 							<i class="fa fa-long-arrow-right"></i>						
 						</a>
 					</div>
 				</form>
+
+				<?php } ?>
+
+
+
+
 			</div>
 		</div>
 	</div>
