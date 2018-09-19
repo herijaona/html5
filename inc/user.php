@@ -417,5 +417,24 @@ public function selectRow(){
 }
 
 
+public function simpleRow($id){
+    global $db;
+    $stmt = $db->prepare( "SELECT * FROM sendmail WHERE users_id =:users_id" );
+    $stmt->bindParam(':users_id', $id , PDO::PARAM_STR);
+     $stmt->execute();
+    $st = $stmt->fetchAll();
+    return $st;
+
+}
+
+public function oneRow($id){
+    global $db;
+    $stmt = $db->prepare( "SELECT * FROM sendmail WHERE id_prime =:id_prime" );
+    $stmt->bindParam(':id_prime', $id , PDO::PARAM_STR);
+     $stmt->execute();
+    $st = $stmt->fetch();
+    return $st;
+
+}
 
 }

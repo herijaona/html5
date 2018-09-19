@@ -47,16 +47,16 @@ try {
     $user->addChef();
 
     $iv = $_SESSION['users_id'];
-    $user->addId($_SESSION['users_id']);
+   
 
     $stmt = $db->query('SELECT id FROM users WHERE email=\'' . $_POST['rec'] . '\' ORDER BY id DESC LIMIT 1');
     $use = $stmt->fetch();
-
+    $user->addId($use['0']);
     // $p_hash = password_hash($use['0'], PASSWORD_BCRYPT);
 
     
 
-    $mail->Body    = '<a href="'.$_SERVER['SERVER_NAME'].'/create/index.php?id='.$use['0'].'">Cliquez ici</a>';
+    $mail->Body    = '<a href="'.$_SERVER['SERVER_NAME'].'/create/login.php?id='.$use['0'].'">Cliquez ici</a>';
     $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
 

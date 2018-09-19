@@ -1,7 +1,16 @@
 <?php
 include_once "config/core.php";
-// get simpleRow details
- $st = $user->simpleRow($_SESSION['users_id']);
+
+if(isset($_POST['saisie'])){
+    if(!empty($_POST['description']) AND !empty($_POST['temperature'])){
+       $id_users = $_SESSION['users_id'];
+       $description = $_POST['description'];
+       $temperature = $_POST['temperature'];
+       $id_prime = $_GET['id_prime'];
+       $user->addsaisie($description,$temperature,$id_users,$id_prime); 
+    }   
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -63,30 +72,29 @@ include_once "config/core.php";
 		<!-- /Nav -->
 	</header>
 	<!-- /Header -->
-<div class="container">
-	<table class="table table-striped">
-	<thead>
-		<tr>
-		<th scope="col">Nom de l'entreprise</th>
-		<th scope="col">email</th>
-		<th scope="col">Last</th>
-		<th scope="col">Handle</th>
-		</tr>
-	</thead>
-	<tbody>
-		<?php  foreach($st as $u) { ?>
-			<tr>
-				<th scope="row">
-					<a href="/create/action.php?id=<?php  echo $u['id']; ?>&id_prime=<?php  echo $u['id_prime']; ?>">test</a>
-				</th>
-				<td><?php  echo $u['email']; ?></td>
-				<td>Otto</td>
-				<td>@mdo</td>
-			</tr>
-		<?php } ?>
-	</tbody>
-	</table>
-</div>
+
+    <!-- form data entry -->
+    <div class="section company md-padding-company bg-grey data-entry">
+        <div class="container">
+            <form class="login100-form validate-form" method="post" action='<?php htmlspecialchars($_SERVER["PHP_SELF"]) ?>'>
+                <span class="login100-form-title p-t-20 p-b-45">
+                    Saisie de donnee
+                </span>
+                <div class="wrap-input100 validate-input m-b-10" data-validate = "Username is required">
+                    <input class="input100 mb-20" type="text" name="description" placeholder="description">
+                </div>
+                <div class="wrap-input100 validate-input m-b-10" data-validate = "Password is required">
+                    <input class="input100 mb-20" type="text" name="temperature" placeholder="temperature">
+                </div>
+
+                <div class="container-login100-form-btn p-t-10">
+                    <button type="submit" class="btn btn-primary vld-data" name="saisie">Valider</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- end form data entry -->
+
 	<!-- jQuery Plugins -->
 	<script type="text/javascript" src="js/jquery.min.js"></script>
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
